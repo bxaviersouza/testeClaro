@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.validator.GenericValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +20,15 @@ import com.brunoxavier.service.exceptions.ObjectNotFoundException;
 @Service
 public class ClienteService {
 
-	@Autowired
-	ClienteRepository repo;
-	@Autowired
-	EnderecoRepository enderecoRepository;
+	//@Autowired
+	private final ClienteRepository repo;
+	//@Autowired
+	private final EnderecoRepository enderecoRepository;
+	
+	public ClienteService(ClienteRepository repo, EnderecoRepository enderecoRepository) {
+		this.repo = repo;
+		this.enderecoRepository = enderecoRepository;
+	}
 	
 	public Cliente find(Integer id) {
 		Optional<Cliente> retorno = repo.findById(id);
@@ -63,6 +67,14 @@ public class ClienteService {
 	
 	public List<Cliente> findAll() {
 		return repo.findAll();
+	}
+	
+	public Cliente searchJPQL(Integer id) {
+		return repo.searchJPQL(id);
+	}
+	
+	public Cliente searchSQL(Integer id) {
+		return repo.searchSQL(id);
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDto) {

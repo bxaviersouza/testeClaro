@@ -36,6 +36,18 @@ public class ClienteResources {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value="/jpql/{id}")
+	public ResponseEntity<Cliente> searchJPQL(@PathVariable Integer id) {
+		Cliente obj = service.searchJPQL(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	@GetMapping(value="/sql/{id}")
+	public ResponseEntity<Cliente> searchSQL(@PathVariable Integer id) {
+		Cliente obj = service.searchSQL(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
 		Cliente obj = service.fromDTO(objDto);
